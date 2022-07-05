@@ -1,0 +1,19 @@
+{
+  "name": "tumblr-markov",
+  "version": "0.0.0",
+  "description": "A bot for generating texts similar to particular tumblrs based on markov-chain methodology.",
+  "main": "backend/index.js",
+  "scripts": {
+    "backend": "node backend/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/walcutt/tumblr-markov.git"
+  },
+  "author": "walcutt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/walcutt/tumblr-markov/issues"
+  },
+  "homepage": "https://github.com/walcutt/tumblr-markov#readme"
+}
