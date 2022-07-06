@@ -3,8 +3,13 @@
   "version": "0.0.0",
   "description": "A bot for generating texts similar to particular tumblrs based on markov-chain methodology.",
   "main": "backend/index.js",
+  "type": "module",
   "scripts": {
-    "backend": "node backend/index.js"
+    "backend": "node backend/index.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "jest": {
+    "transform": {}
   },
   "repository": {
     "type": "git",
@@ -15,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/walcutt/tumblr-markov/issues"
   },
-  "homepage": "https://github.com/walcutt/tumblr-markov#readme"
+  "homepage": "https://github.com/walcutt/tumblr-markov#readme",
+  "devDependencies": {
+    "jest": "^28.1.2"
+  }
 }
