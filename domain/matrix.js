@@ -32,7 +32,7 @@ export class MarkovMatrix {
         let distribution = this.getDistribution(prefix);
         distribution.addCharacterCount(nextChar);
 
-        if(!this.prefixList.includes(prefix)) {
+        if(!this.prefixMap[prefix]) {
             this.prefixList.push(prefix);
             this.prefixMap[prefix] = distribution;
         }
