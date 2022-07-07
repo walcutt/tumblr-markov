@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Test inputs which don't need to be committed.
+test-inputs/*
