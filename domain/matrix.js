@@ -28,6 +28,16 @@ export class MarkovMatrix {
         return this.prefixMap[prefix] ?? new Distribution();
     }
 
+    registerPair(prefix, nextChar) {
+        let distribution = this.getDistribution(prefix);
+        distribution.addCharacterCount(nextChar);
+
+        if(!this.prefixList.includes(prefix)) {
+            this.prefixList.push(prefix);
+            this.prefixMap[prefix] = distribution;
+        }
+    }
+
     serialize() {
         return new MarkovMatrixSerialization(this.prefixMap, this.prefixList);
     }

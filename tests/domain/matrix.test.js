@@ -88,3 +88,68 @@ test('Invalid prefix distribution retrieval', () => {
 
     expect(mm.getDistribution('c')).toEqual(nullDist);
 });
+
+test('Registering existing prefix pair', () => {
+    let aDist = new Distribution(
+        new DistributionSerialization(
+            [ { char: 'b', count: 1 } ]
+        )
+    );
+    let aDist2 = new Distribution(
+        new DistributionSerialization(
+            [ { char: 'b', count: 2 } ]
+        )
+    );
+    let mms = new MarkovMatrixSerialization(
+        {
+            'a': aDist
+        },
+        [ 'a' ]
+    );
+    let mms2 = new MarkovMatrixSerialization(
+        {
+            'a': aDist2
+        },
+        [ 'a' ]
+    );
+
+    let mm = new MarkovMatrix(mms);
+    let mm2 = new MarkovMatrix(mms2);
+
+    mm.registerPair('a', 'b');
+
+    expect(mm).toEqual(mm2);
+});
+
+test('Registering new prefix pair', () => {
+    let aDist = new Distribution(
+        new DistributionSerialization(
+            [ { char: 'x', count: 1 } ]
+        )
+    );
+    let bDist = new Distribution(
+        new DistributionSerialization(
+            [ { char: 'y', count: 1 } ]
+        )
+    );
+    let mms = new MarkovMatrixSerialization(
+        {
+            'a': aDist
+        },
+        [ 'a' ]
+    );
+    let mms2 = new MarkovMatrixSerialization(
+        {
+            'a': aDist,
+            'b': bDist
+        },
+        [ 'a', 'b' ]
+    );
+    
+    let mm = new MarkovMatrix(mms);
+    let mm2 = new MarkovMatrix(mms2);
+    
+    mm.registerPair('b', 'y');
+
+    expect(mm).toEqual(mm2);
+});
