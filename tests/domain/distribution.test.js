@@ -85,3 +85,45 @@ test('Non-null random generation out of bounds', () => {
     expect(dist.getValFromCDF(-1)).toEqual('a');
     expect(dist.getValFromCDF(2)).toEqual('c');
 });
+
+test('Adding character counts', () => {
+    let distributionSer = new DistributionSerialization([
+        {
+            char: 'a',
+            count: 1
+        },
+        {
+            char: 'b',
+            count: 2
+        },
+        {
+            char: 'c',
+            count: 3
+        }
+    ]);
+    let dist = new Distribution(distributionSer);
+    let distributionSer2 = new DistributionSerialization([
+        {
+            char: 'a',
+            count: 1
+        },
+        {
+            char: 'b',
+            count: 2
+        },
+        {
+            char: 'c',
+            count: 4
+        },
+        {
+            char: 'd',
+            count: 1
+        }
+    ]);
+    let dist2 = new Distribution(distributionSer2);
+
+    dist.addCharacterCount('c');
+    dist.addCharacterCount('d');
+
+    expect(dist).toEqual(dist2);
+});
