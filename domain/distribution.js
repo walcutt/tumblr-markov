@@ -43,6 +43,10 @@ export class Distribution {
         this.cdfMax = accumulator;
     }
 
+    getNext() {
+        return this.getValFromCDF(Math.random());
+    }
+
     getValFromCDF(linearParam) {
         let totalParam = linearParam * this.cdfMax;
         if(totalParam < 0) totalParam = 0;
