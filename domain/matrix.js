@@ -20,7 +20,7 @@ export class MarkovMatrix {
 
         this.prefixMap = {};
         for(let i = 0; i < mmSerialization.matrix.length; i++) {
-            this.prefixMap[mmSerialization.matrix[i].prefix] = new Distribution(mmSerialization.matrix[i].dist);
+            this.prefixMap[mmSerialization.matrix[i].prefix] = mmSerialization.matrix[i].dist.deserialize();
         }
     }
 

@@ -12,14 +12,12 @@ test('Test default parameters', () => {
 
 test('Non-null matrix parameter', () => {
     let dist = new Distribution(
-        new DistributionSerialization(
-            [
-                {
-                    char: 'a',
-                    count: 1
-                }
-            ]
-        )
+        [
+            {
+                char: 'a',
+                count: 1
+            }
+        ]
     );
     let matrixSerialization = new MarkovMatrixSerialization(
         {
@@ -35,14 +33,12 @@ test('Non-null matrix parameter', () => {
 
 test('Empty string dissection', () => {
     let dist = new Distribution(
-        new DistributionSerialization(
-            [
-                {
-                    char: DEFAULT_CHARACTER,
-                    count: 1
-                }
-            ]
-        )
+        [
+            {
+                char: DEFAULT_CHARACTER,
+                count: 1
+            }
+        ]
     );
     let mms = new MarkovMatrixSerialization(
         {
@@ -61,44 +57,36 @@ test('Nominal string dissection', () => {
     let mms = new MarkovMatrixSerialization(
         {
             '': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'a',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'a',
+                        count: 1
+                    }
+                ]
             ),
             'a': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'b',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'b',
+                        count: 1
+                    }
+                ]
             ),
             'ab': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'c',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'c',
+                        count: 1
+                    }
+                ]
             ),
             'bc': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {  
-                            char: DEFAULT_CHARACTER,
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {  
+                        char: DEFAULT_CHARACTER,
+                        count: 1
+                    }
+                ]
             )
         },
         [ '', 'a', 'ab', 'bc' ]
@@ -114,58 +102,48 @@ test('Repeating prefix string dissection', () => {
     let mms = new MarkovMatrixSerialization(
         {
             '': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'a',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'a',
+                        count: 1
+                    }
+                ]
             ),
             'a': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'a',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'a',
+                        count: 1
+                    }
+                ]
             ),
             'aa': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'a',
-                            count: 1
-                        },
-                        {
-                            char: 'b',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'a',
+                        count: 1
+                    },
+                    {
+                        char: 'b',
+                        count: 1
+                    }
+                ]
             ),
             'ab': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'c',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'c',
+                        count: 1
+                    }
+                ]
             ),
             'bc': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {  
-                            char: DEFAULT_CHARACTER,
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {  
+                        char: DEFAULT_CHARACTER,
+                        count: 1
+                    }
+                ]
             )
         },
         [ '', 'a', 'aa', 'ab', 'bc' ]
@@ -181,62 +159,52 @@ test('Dissecting multiple strings', () => {
     let mms = new MarkovMatrixSerialization(
         {
             '': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'a',
-                            count: 2
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'a',
+                        count: 2
+                    }
+                ]
             ),
             'a': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'a',
-                            count: 1
-                        },
-                        {
-                            char: 'b',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'a',
+                        count: 1
+                    },
+                    {
+                        char: 'b',
+                        count: 1
+                    }
+                ]
             ),
             'aa': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'a',
-                            count: 1
-                        },
-                        {
-                            char: 'b',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'a',
+                        count: 1
+                    },
+                    {
+                        char: 'b',
+                        count: 1
+                    }
+                ]
             ),
             'ab': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'c',
-                            count: 2
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'c',
+                        count: 2
+                    }
+                ]
             ),
             'bc': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {  
-                            char: DEFAULT_CHARACTER,
-                            count: 2
-                        }
-                    ]
-                )
+                [
+                    {  
+                        char: DEFAULT_CHARACTER,
+                        count: 2
+                    }
+                ]
             )
         },
         [ '', 'a', 'aa', 'ab', 'bc' ]
@@ -253,44 +221,36 @@ test('Prefix longer than string', () => {
     let mms = new MarkovMatrixSerialization(
         {
             '': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'a',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'a',
+                        count: 1
+                    }
+                ]
             ),
             'a': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'b',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'b',
+                        count: 1
+                    }
+                ]
             ),
             'ab': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'c',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'c',
+                        count: 1
+                    }
+                ]
             ),
             'abc': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {  
-                            char: DEFAULT_CHARACTER,
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {  
+                        char: DEFAULT_CHARACTER,
+                        count: 1
+                    }
+                ]
             )
         },
         [ '', 'a', 'ab', 'abc' ]

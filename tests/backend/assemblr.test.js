@@ -14,44 +14,36 @@ test('Deterministic matrix generation', () => {
     let mms = new MarkovMatrixSerialization(
         {
             '': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'a',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'a',
+                        count: 1
+                    }
+                ]
             ),
             'a': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'b',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'b',
+                        count: 1
+                    }
+                ]
             ),
             'b': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'c',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'c',
+                        count: 1
+                    }
+                ]
             ),
             'c': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: DEFAULT_CHARACTER,
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: DEFAULT_CHARACTER,
+                        count: 1
+                    }
+                ]
             )
         },
         [ '', 'a', 'b', 'c' ]
@@ -68,44 +60,36 @@ test('Deterministic matrix generation with cutoff', () => {
     let mms = new MarkovMatrixSerialization(
         {
             '': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'a',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'a',
+                        count: 1
+                    }
+                ]
             ),
             'a': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'b',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'b',
+                        count: 1
+                    }
+                ]
             ),
             'b': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'c',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'c',
+                        count: 1
+                    }
+                ]
             ),
             'c': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: DEFAULT_CHARACTER,
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: DEFAULT_CHARACTER,
+                        count: 1
+                    }
+                ]
             )
         },
         [ '', 'a', 'b', 'c' ]
@@ -122,24 +106,20 @@ test('Deterministic indefinite matrix generation with cutoff', () => {
     let mms = new MarkovMatrixSerialization(
         {
             '': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'a',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'a',
+                        count: 1
+                    }
+                ]
             ),
             'a': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'a',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'a',
+                        count: 1
+                    }
+                ]
             )
         },
         [ '', 'a' ]
@@ -156,54 +136,44 @@ test('Deterministic matrix generation with longer prefix', () => {
     let mms = new MarkovMatrixSerialization(
         {
             '': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'a',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'a',
+                        count: 1
+                    }
+                ]
             ),
             'a': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'b',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'b',
+                        count: 1
+                    }
+                ]
             ),
             'ab': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'c',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'c',
+                        count: 1
+                    }
+                ]
             ),
             'bc': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'd',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'd',
+                        count: 1
+                    }
+                ]
             ),
             'cd': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: DEFAULT_CHARACTER,
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: DEFAULT_CHARACTER,
+                        count: 1
+                    }
+                ]
             )
         },
         [ '', 'a', 'ab', 'bc', 'cd' ]
@@ -220,48 +190,40 @@ test('Non-Deterministic matrix generation', () => {
     let mms = new MarkovMatrixSerialization(
         {
             '': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'a',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'a',
+                        count: 1
+                    }
+                ]
             ),
             'a': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'b',
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'b',
+                        count: 1
+                    }
+                ]
             ),
             'b': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'c',
-                            count: 1
-                        },
-                        {
-                            char: 'b',
-                            count: 2
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: 'c',
+                        count: 1
+                    },
+                    {
+                        char: 'b',
+                        count: 2
+                    }
+                ]
             ),
             'c': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: DEFAULT_CHARACTER,
-                            count: 1
-                        }
-                    ]
-                )
+                [
+                    {
+                        char: DEFAULT_CHARACTER,
+                        count: 1
+                    }
+                ]
             )
         },
         [ '', 'a', 'b', 'c' ]

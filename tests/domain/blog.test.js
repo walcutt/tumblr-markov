@@ -14,14 +14,12 @@ test('Preservation through serialization', () => {
     let mms = new MarkovMatrixSerialization(
         {
             'a': new Distribution(
-                new DistributionSerialization(
-                    [
-                        {
-                            char: 'a',
-                            count: 1
+                [
+                    {
+                        char: 'a',
+                        count: 1
                         }
-                    ]
-                )
+                ]
             )
         },
         [ 'a' ]
@@ -33,6 +31,8 @@ test('Preservation through serialization', () => {
 
     let blogS = blog.serialize();
     let blog2 = blogS.deserialize();
+    let blogS2 = blog2.serialize();
 
     expect(blog).toEqual(blog2);
+    expect(blogS).toEqual(blogS2);
 });

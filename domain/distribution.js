@@ -10,15 +10,9 @@ export class Distribution {
     //int
     cdfMax;
 
-    constructor(distSerialization = null) {
-        if(distSerialization === null || distSerialization.frequencies.length === 0) {
-            this.frequencyPDF = [];
-            this.frequencyCDF = [];
-            this.cdfMax = 0;
-            return;
-        }
-
-        this.frequencyPDF = distSerialization.frequencies.map(
+    constructor(frequencyPDF = []) {
+        //Do a deep copy to avoid problems from reference typings.
+        this.frequencyPDF = frequencyPDF.map(
             e => {
                 return {
                     char: e.char,
@@ -101,6 +95,12 @@ export class DistributionSerialization {
                     count: e.count
                 };
             }
+        );
+    }
+
+    deserialize() {
+        return new Distribution(
+            this.frequencies
         );
     }
 }

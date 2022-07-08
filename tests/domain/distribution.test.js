@@ -20,7 +20,7 @@ test('Null distribution generator', () => {
 });
 
 test('Preservation of data structure through conversions', () => {
-    let distributionSer = new DistributionSerialization([
+    let ds = new DistributionSerialization([
         {
             char: 'a',
             count: 1
@@ -34,16 +34,16 @@ test('Preservation of data structure through conversions', () => {
             count: 3
         }
     ]);
-    let distribution = new Distribution(distributionSer);
-    let ds2 = distribution.serialize();
-    let d2 = new Distribution(ds2);
+    let d = ds.deserialize();
+    let ds2 = d.serialize();
+    let d2 = ds2.deserialize();
 
-    expect(distributionSer).toEqual(ds2);
-    expect(distribution).toEqual(d2);
+    expect(ds).toEqual(ds2);
+    expect(d).toEqual(d2);
 });
 
 test('Non-null random generation within bounds', () => {
-    let distributionSer = new DistributionSerialization([
+    let dist = new Distribution([
         {
             char: 'a',
             count: 1
@@ -57,7 +57,6 @@ test('Non-null random generation within bounds', () => {
             count: 3
         }
     ]);
-    let dist = new Distribution(distributionSer);
 
     expect(dist.getValFromCDF(0)).toEqual('a');
     expect(dist.getValFromCDF(0.5 / 6)).toEqual('a');
@@ -66,7 +65,7 @@ test('Non-null random generation within bounds', () => {
 });
 
 test('Non-null random generation out of bounds', () => {
-    let distributionSer = new DistributionSerialization([
+    let dist = new Distribution([
         {
             char: 'a',
             count: 1
@@ -80,14 +79,13 @@ test('Non-null random generation out of bounds', () => {
             count: 3
         }
     ]);
-    let dist = new Distribution(distributionSer);
 
     expect(dist.getValFromCDF(-1)).toEqual('a');
     expect(dist.getValFromCDF(2)).toEqual('c');
 });
 
 test('Adding character counts', () => {
-    let distributionSer = new DistributionSerialization([
+    let dist = new Distribution([
         {
             char: 'a',
             count: 1
@@ -101,8 +99,7 @@ test('Adding character counts', () => {
             count: 3
         }
     ]);
-    let dist = new Distribution(distributionSer);
-    let distributionSer2 = new DistributionSerialization([
+    let dist2 = new Distribution([
         {
             char: 'a',
             count: 1
@@ -120,7 +117,6 @@ test('Adding character counts', () => {
             count: 1
         }
     ]);
-    let dist2 = new Distribution(distributionSer2);
 
     dist.addCharacterCount('c');
     dist.addCharacterCount('d');

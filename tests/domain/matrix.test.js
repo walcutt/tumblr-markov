@@ -41,14 +41,10 @@ test('Preservation of data structure through conversions', () => {
 
 test('Valid prefix distribution retrieval', () => {
     let aDist = new Distribution(
-        new DistributionSerialization(
-            [ { char: 'a', count: 1 } ]
-        )
+        [ { char: 'a', count: 1 } ]
     );
     let bDist = new Distribution(
-        new DistributionSerialization(
-            [ { char: 'b', count: 1 } ]
-        )
+        [ { char: 'b', count: 1 } ]
     );
     let mms = new MarkovMatrixSerialization(
         {
@@ -67,14 +63,10 @@ test('Valid prefix distribution retrieval', () => {
 test('Invalid prefix distribution retrieval', () => {
     let nullDist = new Distribution();
     let aDist = new Distribution(
-        new DistributionSerialization(
-            [ { char: 'a', count: 1 } ]
-        )
+        [ { char: 'a', count: 1 } ]
     );
     let bDist = new Distribution(
-        new DistributionSerialization(
-            [ { char: 'b', count: 1 } ]
-        )
+        [ { char: 'b', count: 1 } ]
     );
     let mms = new MarkovMatrixSerialization(
         {
@@ -91,14 +83,10 @@ test('Invalid prefix distribution retrieval', () => {
 
 test('Registering existing prefix pair', () => {
     let aDist = new Distribution(
-        new DistributionSerialization(
-            [ { char: 'b', count: 1 } ]
-        )
+        [ { char: 'b', count: 1 } ]
     );
     let aDist2 = new Distribution(
-        new DistributionSerialization(
-            [ { char: 'b', count: 2 } ]
-        )
+        [ { char: 'b', count: 2 } ]
     );
     let mms = new MarkovMatrixSerialization(
         {
@@ -123,14 +111,10 @@ test('Registering existing prefix pair', () => {
 
 test('Registering new prefix pair', () => {
     let aDist = new Distribution(
-        new DistributionSerialization(
-            [ { char: 'x', count: 1 } ]
-        )
+        [ { char: 'x', count: 1 } ]
     );
     let bDist = new Distribution(
-        new DistributionSerialization(
-            [ { char: 'y', count: 1 } ]
-        )
+        [ { char: 'y', count: 1 } ]
     );
     let mms = new MarkovMatrixSerialization(
         {
