@@ -9,9 +9,7 @@ export class Dissector {
     prefixDepth;
 
     constructor(prefixDepth, markovMatrixSerialization = null) {
-        this.matrix = new MarkovMatrix(
-            markovMatrixSerialization ?? new MarkovMatrixSerialization()
-        );
+        this.matrix = (markovMatrixSerialization ?? new MarkovMatrixSerialization()).deserialize();
         this.prefixDepth = prefixDepth;
     }
 

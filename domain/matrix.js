@@ -7,21 +7,9 @@ export class MarkovMatrix {
     //Dictionary<string, Distribution>
     prefixMap;
     
-    constructor(mmSerialization = null) {
-        if(mmSerialization === null) {
-            this.prefixList = [];
-            this.prefixMap = {};
-            return;
-        }
-
-        this.prefixList = mmSerialization.matrix.map(
-            (pair) => pair.prefix
-        );
-
-        this.prefixMap = {};
-        for(let i = 0; i < mmSerialization.matrix.length; i++) {
-            this.prefixMap[mmSerialization.matrix[i].prefix] = mmSerialization.matrix[i].dist.deserialize();
-        }
+    constructor(prefixMap = {}, prefixList = []) {
+        this.prefixMap = prefixMap;
+        this.prefixList = prefixList;
     }
 
     getDistribution(prefix) {
@@ -56,5 +44,18 @@ export class MarkovMatrixSerialization {
                 }
             }
         );
+    }
+
+    deserialize() {
+        let prefixList = this.matrix.map(
+            pair => pair.prefix
+        );
+
+        let prefixMap = {};
+        for(let i = 0; i < this.matrix.length; i++) {
+            prefixMap[this.matrix[i].prefix] = this.matrix[i].dist.deserialize();
+        }
+
+        return new MarkovMatrix(prefixMap, prefixList);
     }
 }

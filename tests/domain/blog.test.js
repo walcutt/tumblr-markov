@@ -11,7 +11,7 @@ test('Null Parameters', () => {
 });
 
 test('Preservation through serialization', () => {
-    let mms = new MarkovMatrixSerialization(
+    let mm = new MarkovMatrix(
         {
             'a': new Distribution(
                 [
@@ -24,7 +24,6 @@ test('Preservation through serialization', () => {
         },
         [ 'a' ]
     );
-    let mm = new MarkovMatrix(mms);
 
     let date = new Date();
     let blog = new Blog('test', date, mm);

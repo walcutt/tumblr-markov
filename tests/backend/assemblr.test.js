@@ -11,7 +11,7 @@ test('Null matrix generation', () => {
 });
 
 test('Deterministic matrix generation', () => {
-    let mms = new MarkovMatrixSerialization(
+    let matrix = new MarkovMatrix(
         {
             '': new Distribution(
                 [
@@ -48,7 +48,6 @@ test('Deterministic matrix generation', () => {
         },
         [ '', 'a', 'b', 'c' ]
     );
-    let matrix = new MarkovMatrix(mms);
 
     let assembler = new Assembler(1, matrix);
     let generatedString = assembler.generate();
@@ -57,7 +56,7 @@ test('Deterministic matrix generation', () => {
 });
 
 test('Deterministic matrix generation with cutoff', () => {
-    let mms = new MarkovMatrixSerialization(
+    let matrix = new MarkovMatrix(
         {
             '': new Distribution(
                 [
@@ -94,7 +93,6 @@ test('Deterministic matrix generation with cutoff', () => {
         },
         [ '', 'a', 'b', 'c' ]
     );
-    let matrix = new MarkovMatrix(mms);
 
     let assembler = new Assembler(1, matrix);
     let generatedString = assembler.generate(2);
@@ -103,7 +101,7 @@ test('Deterministic matrix generation with cutoff', () => {
 });
 
 test('Deterministic indefinite matrix generation with cutoff', () => {
-    let mms = new MarkovMatrixSerialization(
+    let matrix = new MarkovMatrix(
         {
             '': new Distribution(
                 [
@@ -124,7 +122,6 @@ test('Deterministic indefinite matrix generation with cutoff', () => {
         },
         [ '', 'a' ]
     );
-    let matrix = new MarkovMatrix(mms);
 
     let assembler = new Assembler(1, matrix);
     let generatedString = assembler.generate(8);
@@ -133,7 +130,7 @@ test('Deterministic indefinite matrix generation with cutoff', () => {
 });
 
 test('Deterministic matrix generation with longer prefix', () => {
-    let mms = new MarkovMatrixSerialization(
+    let matrix = new MarkovMatrix(
         {
             '': new Distribution(
                 [
@@ -178,7 +175,6 @@ test('Deterministic matrix generation with longer prefix', () => {
         },
         [ '', 'a', 'ab', 'bc', 'cd' ]
     );
-    let matrix = new MarkovMatrix(mms);
 
     let assembler = new Assembler(2, matrix);
     let generatedString = assembler.generate();
@@ -187,7 +183,7 @@ test('Deterministic matrix generation with longer prefix', () => {
 });
 
 test('Non-Deterministic matrix generation', () => {
-    let mms = new MarkovMatrixSerialization(
+    let matrix = new MarkovMatrix(
         {
             '': new Distribution(
                 [
@@ -228,7 +224,6 @@ test('Non-Deterministic matrix generation', () => {
         },
         [ '', 'a', 'b', 'c' ]
     );
-    let matrix = new MarkovMatrix(mms);
 
     let assembler = new Assembler(1, matrix);
     let generatedString = assembler.generate();

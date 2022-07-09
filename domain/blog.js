@@ -47,7 +47,7 @@ export class BlogSerialization {
         return new Blog(
             this.url,
             new Date(this.dateString),
-            new MarkovMatrix(this.matrix)
+            this.matrix.deserialize()
         )
     }
 }
