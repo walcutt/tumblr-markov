@@ -11,7 +11,7 @@ test('Test default parameters', () => {
 });
 
 test('Non-null matrix parameter', () => {
-    let dist = new Distribution(
+    let dist = new DistributionSerialization(
         [
             {
                 char: 'a',
@@ -20,10 +20,12 @@ test('Non-null matrix parameter', () => {
         ]
     );
     let matrixSerialization = new MarkovMatrixSerialization(
-        {
-            a: dist
-        },
-        [ 'a' ]
+        [
+            {
+                prefix: 'a',
+                dist: dist
+            }
+        ]
     );
 
     let dissector = new Dissector(1, matrixSerialization);
@@ -32,7 +34,7 @@ test('Non-null matrix parameter', () => {
 });
 
 test('Empty string dissection', () => {
-    let dist = new Distribution(
+    let dist = new DistributionSerialization(
         [
             {
                 char: DEFAULT_CHARACTER,
@@ -41,10 +43,12 @@ test('Empty string dissection', () => {
         ]
     );
     let mms = new MarkovMatrixSerialization(
-        {
-            '': dist
-        },
-        [ '' ]
+        [
+            {
+                prefix: '',
+                dist: dist
+            }
+        ]
     );
     let dissector = new Dissector(1);
 
@@ -55,41 +59,52 @@ test('Empty string dissection', () => {
 
 test('Nominal string dissection', () => {
     let mms = new MarkovMatrixSerialization(
-        {
-            '': new Distribution(
-                [
-                    {
-                        char: 'a',
-                        count: 1
-                    }
-                ]
-            ),
-            'a': new Distribution(
-                [
-                    {
-                        char: 'b',
-                        count: 1
-                    }
-                ]
-            ),
-            'ab': new Distribution(
-                [
-                    {
-                        char: 'c',
-                        count: 1
-                    }
-                ]
-            ),
-            'bc': new Distribution(
-                [
-                    {  
-                        char: DEFAULT_CHARACTER,
-                        count: 1
-                    }
-                ]
-            )
-        },
-        [ '', 'a', 'ab', 'bc' ]
+        [
+            {
+                prefix: '',
+                dist: new DistributionSerialization(
+                    [
+                        {
+                            char: 'a',
+                            count: 1
+                        }
+                    ]
+                )
+            },
+            {
+                prefix: 'a',
+                dist: new DistributionSerialization(
+                    [
+                        {
+                            char: 'b',
+                            count: 1
+                        }
+                    ]
+                )
+            },
+            {
+                prefix: 'ab',
+                dist: new DistributionSerialization(
+                    [
+                        {
+                            char: 'c',
+                            count: 1
+                        }
+                    ]
+                )
+            },
+            {
+                prefix: 'bc',
+                dist: new DistributionSerialization(
+                    [
+                        {
+                            char: DEFAULT_CHARACTER,
+                            count: 1
+                        }
+                    ]
+                )
+            }
+        ]
     );
 
     let dissector = new Dissector(2);
@@ -100,53 +115,67 @@ test('Nominal string dissection', () => {
 
 test('Repeating prefix string dissection', () => {
     let mms = new MarkovMatrixSerialization(
-        {
-            '': new Distribution(
-                [
-                    {
-                        char: 'a',
-                        count: 1
-                    }
-                ]
-            ),
-            'a': new Distribution(
-                [
-                    {
-                        char: 'a',
-                        count: 1
-                    }
-                ]
-            ),
-            'aa': new Distribution(
-                [
-                    {
-                        char: 'a',
-                        count: 1
-                    },
-                    {
-                        char: 'b',
-                        count: 1
-                    }
-                ]
-            ),
-            'ab': new Distribution(
-                [
-                    {
-                        char: 'c',
-                        count: 1
-                    }
-                ]
-            ),
-            'bc': new Distribution(
-                [
-                    {  
-                        char: DEFAULT_CHARACTER,
-                        count: 1
-                    }
-                ]
-            )
-        },
-        [ '', 'a', 'aa', 'ab', 'bc' ]
+        [
+            {
+                prefix: '',
+                dist: new DistributionSerialization(
+                    [
+                        {
+                            char: 'a',
+                            count: 1
+                        }
+                    ]
+                )
+            },
+            {
+                prefix: 'a',
+                dist: new DistributionSerialization(
+                    [
+                        {
+                            char: 'a',
+                            count: 1
+                        }
+                    ]
+                )
+            },
+            {
+                prefix: 'aa',
+                dist: new DistributionSerialization(
+                    [
+                        {
+                            char: 'a',
+                            count: 1
+                        },
+                        {
+                            char: 'b',
+                            count: 1
+                        }
+                    ]
+                )
+            },
+            {
+                prefix: 'ab',
+                dist: new DistributionSerialization(
+                    [
+                        {
+                            char: 'c',
+                            count: 1
+                        }
+                    ]
+                )
+            },
+            {
+                prefix: 'bc',
+                dist: new DistributionSerialization(
+                    [
+                        {
+                            char: DEFAULT_CHARACTER,
+                            count: 1
+                        }
+                    ]
+                )
+            }
+        ]
     );
 
     let dissector = new Dissector(2);
@@ -157,57 +186,71 @@ test('Repeating prefix string dissection', () => {
 
 test('Dissecting multiple strings', () => {
     let mms = new MarkovMatrixSerialization(
-        {
-            '': new Distribution(
-                [
-                    {
-                        char: 'a',
-                        count: 2
-                    }
-                ]
-            ),
-            'a': new Distribution(
-                [
-                    {
-                        char: 'a',
-                        count: 1
-                    },
-                    {
-                        char: 'b',
-                        count: 1
-                    }
-                ]
-            ),
-            'aa': new Distribution(
-                [
-                    {
-                        char: 'a',
-                        count: 1
-                    },
-                    {
-                        char: 'b',
-                        count: 1
-                    }
-                ]
-            ),
-            'ab': new Distribution(
-                [
-                    {
-                        char: 'c',
-                        count: 2
-                    }
-                ]
-            ),
-            'bc': new Distribution(
-                [
-                    {  
-                        char: DEFAULT_CHARACTER,
-                        count: 2
-                    }
-                ]
-            )
-        },
-        [ '', 'a', 'aa', 'ab', 'bc' ]
+        [
+            {
+                prefix: '',
+                dist: new DistributionSerialization(
+                    [
+                        {
+                            char: 'a',
+                            count: 2
+                        }
+                    ]
+                )
+            },
+            {
+                prefix: 'a',
+                dist: new DistributionSerialization(
+                    [
+                        {
+                            char: 'a',
+                            count: 1
+                        },
+                        {
+                            char: 'b',
+                            count: 1
+                        }
+                    ]
+                )
+            },
+            {
+                prefix: 'aa',
+                dist: new DistributionSerialization(
+                    [
+                        {
+                            char: 'a',
+                            count: 1
+                        },
+                        {
+                            char: 'b',
+                            count: 1
+                        }
+                    ]
+                )
+            },
+            {
+                prefix: 'ab',
+                dist: new DistributionSerialization(
+                    [
+                        {
+                            char:'c',
+                            count: 2
+                        }
+                    ]
+                )
+            },
+            {
+                prefix: 'bc',
+                dist: new DistributionSerialization(
+                    [
+                        {
+                            char: DEFAULT_CHARACTER,
+                            count: 2
+                        }
+                    ]
+                )
+            }
+        ]
     );
 
     let dissector = new Dissector(2);
@@ -219,41 +262,52 @@ test('Dissecting multiple strings', () => {
 
 test('Prefix longer than string', () => {
     let mms = new MarkovMatrixSerialization(
-        {
-            '': new Distribution(
-                [
-                    {
-                        char: 'a',
-                        count: 1
-                    }
-                ]
-            ),
-            'a': new Distribution(
-                [
-                    {
-                        char: 'b',
-                        count: 1
-                    }
-                ]
-            ),
-            'ab': new Distribution(
-                [
-                    {
-                        char: 'c',
-                        count: 1
-                    }
-                ]
-            ),
-            'abc': new Distribution(
-                [
-                    {  
-                        char: DEFAULT_CHARACTER,
-                        count: 1
-                    }
-                ]
-            )
-        },
-        [ '', 'a', 'ab', 'abc' ]
+        [
+            {
+                prefix: '',
+                dist: new DistributionSerialization(
+                    [
+                        {
+                            char: 'a',
+                            count: 1
+                        }
+                    ]
+                )
+            },
+            {
+                prefix: 'a',
+                dist: new DistributionSerialization(
+                    [
+                        {
+                            char: 'b',
+                            count: 1
+                        }
+                    ]
+                )
+            },
+            {
+                prefix: 'ab',
+                dist: new DistributionSerialization(
+                    [
+                        {
+                            char: 'c',
+                            count: 1
+                        }
+                    ]
+                )
+            },
+            {
+                prefix: 'abc',
+                dist: new DistributionSerialization(
+                    [
+                        {
+                            char: DEFAULT_CHARACTER,
+                            count: 1
+                        }
+                    ]
+                )
+            }
+        ]
     );
 
     let dissector = new Dissector(4);

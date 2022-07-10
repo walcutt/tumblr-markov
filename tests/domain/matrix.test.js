@@ -19,7 +19,7 @@ test('Null retrieval', () => {
 });
 
 test('Preservation of data structure through conversions', () => {
-    let mms = new MarkovMatrixSerialization(
+    let mm = new MarkovMatrix(
         {
             'a': new Distribution(),
             'aa': new Distribution(),
@@ -31,9 +31,9 @@ test('Preservation of data structure through conversions', () => {
             'xyz'
         ]
     );
-    let mm = mms.deserialize();
-    let mms2 = mm.serialize();
-    let mm2 = mms2.deserialize();
+    let mms = mm.serialize();
+    let mm2 = mms.deserialize();
+    let mms2 = mm2.serialize();
 
     expect(mms).toEqual(mms2);
     expect(mm).toEqual(mm2);

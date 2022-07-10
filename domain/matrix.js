@@ -27,7 +27,16 @@ export class MarkovMatrix {
     }
 
     serialize() {
-        return new MarkovMatrixSerialization(this.prefixMap, this.prefixList);
+        let prefixMap = this.prefixMap;
+        let matrixArray = this.prefixList.map(
+            (prefix) => {
+                return {
+                    prefix: prefix,
+                    dist: prefixMap[prefix].serialize()
+                }
+            }
+        )
+        return new MarkovMatrixSerialization(matrixArray);
     }
 }
 
@@ -35,15 +44,8 @@ export class MarkovMatrixSerialization {
     //Array<Pair<string, DistributionSerialization>>
     matrix;
 
-    constructor(prefixMap = {}, prefixList = []) {
-        this.matrix = prefixList.map(
-            (prefix) => {
-                return {
-                    prefix: prefix,
-                    dist: prefixMap[prefix].serialize()
-                }
-            }
-        );
+    constructor(matrixArray = []) {
+        this.matrix = matrixArray;
     }
 
     deserialize() {

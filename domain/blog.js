@@ -1,4 +1,4 @@
-import { MarkovMatrix } from "./matrix";
+import { MarkovMatrix, MarkovMatrixSerialization } from "./matrix";
 
 export const DEFAULT_POST_DATE = new Date(0);
 
@@ -21,8 +21,8 @@ export class Blog {
     serialize() {
         return new BlogSerialization(
             this.url,
-            this.latestAccessedPostDate,
-            this.matrix
+            this.latestAccessedPostDate.toISOString(),
+            this.matrix.serialize()
         );
     }
 }
@@ -37,10 +37,10 @@ export class BlogSerialization {
     //MarkovMatrixSerialization
     matrix;
 
-    constructor(url = '', date = DEFAULT_POST_DATE, matrix = null) {
+    constructor(url = '', date = DEFAULT_POST_DATE.toISOString(), matrix = null) {
         this.url = url;
-        this.dateString = date.toISOString();
-        this.matrix = (matrix ?? new MarkovMatrix()).serialize();
+        this.dateString = date;
+        this.matrix = matrix ?? new MarkovMatrixSerialization();
     }
 
     deserialize() {
