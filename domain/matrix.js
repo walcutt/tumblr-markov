@@ -27,14 +27,14 @@ export class MarkovMatrix {
     }
 
     serialize() {
-        let prefixMap = this.prefixMap;
         let matrixArray = this.prefixList.map(
             (prefix) => {
                 return {
                     prefix: prefix,
-                    dist: prefixMap[prefix].serialize()
+                    dist: this.prefixMap[prefix].serialize()
                 }
-            }
+            },
+            this
         )
         return new MarkovMatrixSerialization(matrixArray);
     }
