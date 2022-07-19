@@ -1,8 +1,12 @@
 import sequelize from 'sequelize';
 import { Sequelize, DataTypes } from 'sequelize';
-import { BlogSerialization } from '../domain/blog';
-import { DistributionSerialization } from '../domain/distribution';
-import { MarkovMatrixSerialization } from '../domain/matrix';
+import { BlogSerialization } from '../domain/blog.js';
+import { DistributionSerialization } from '../domain/distribution.js';
+import { MarkovMatrixSerialization } from '../domain/matrix.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
+const ITERATIONS_MAX = 20;
 
 export class DataStore {
     //Sequelize
@@ -18,9 +22,13 @@ export class DataStore {
     synced;
 
     //note: must sync() after constructing.
-    constructor(usePostgres = true, logging = false) {
-        if(usePostgres) {
-
+    constructor(usePersistent = true, logging = false) {
+        if(usePersistent) {
+            this.database = new Sequelize({
+                dialect: 'sqlite',
+                storage: './db-files/db_volumes/sqlite/db.sqlite',
+                logging: logging
+            });
         } else {
             this.database = new Sequelize('sqlite::memory:', { logging: logging });
         }
@@ -101,11 +109,34 @@ export class DataStore {
     }
 
     async syncModels() {
+        await this.databaseIsReady();
         await this.Blog.sync();
         await this.Matrix.sync();
         await this.Distribution.sync();
         await this.DistributionPair.sync();
         this.synced = true;
+    }
+
+    async databaseIsReady() {
+        let sleep = () => new Promise(resolve => {
+            setTimeout(() => {
+                resolve()
+            }, 1000)
+        });
+
+        let iterations = 0;
+        
+        while(iterations < ITERATIONS_MAX) {
+            try {
+                await this.database.authenticate();
+                return;
+            } catch (e) {
+                iterations++;
+                await sleep();
+            }
+        }
+
+        throw new Error(`Database did not accept connection within ${ITERATIONS_MAX} seconds. Make sure it is running correctly, and configurations are correct.`);
     }
 
     async retrieveOrCreate(blogURL) {
@@ -159,6 +190,9 @@ export class DataStore {
     }
 
     async createOrUpdate(blogSerialization) {
+        if(!this.synced) {
+            throw new Error(`Cannot save blog ${blogSerialization.url}. Data store is not properly synced!`);
+        }
         let blogDBObject = await this.Blog.findOne({
             where: {
                 url: blogSerialization.url
@@ -172,101 +206,106 @@ export class DataStore {
     }
 
     async create(blogSerialization) {
-        await this.database.transaction(async (t) => {
-            let blog = await this.Blog.create(
-                {
-                    url: blogSerialization.url,
-                    latest_updated_date: blogSerialization.dateString
-                },
-                {
-                    transaction: t
-                }
-            );
-            let matrix = await blog.createMatrix(
-                {
-
-                },
-                {
-                    transaction: t
-                }
-            );
-
-            let matrixArray = blogSerialization.matrix.matrix;
-            for(let i = 0; i < matrixArray.length; i++) {
-                let distribution = await matrix.createDistribution(
+        try {
+            await this.database.transaction(async (t) => {
+                let blog = await this.Blog.create(
                     {
-                        prefix: matrixArray[i].prefix
+                        url: blogSerialization.url,
+                        latest_updated_date: blogSerialization.dateString
+                    },
+                    {
+                        transaction: t
+                    }
+                );
+                let matrix = await blog.createMatrix(
+                    {
+
                     },
                     {
                         transaction: t
                     }
                 );
 
-                let distArray = matrixArray[i].dist.frequencies;
-                for(let k = 0; k < distArray.length; k++) {
-                    let pair = await distribution.createDistributionPair(
+                let matrixArray = blogSerialization.matrix.matrix;
+                for(let i = 0; i < matrixArray.length; i++) {
+                    let distribution = await matrix.createDistribution(
                         {
-                            character: distArray[k].char,
-                            count: distArray[k].count
+                            prefix: matrixArray[i].prefix
                         },
                         {
                             transaction: t
                         }
                     );
+
+                    let distArray = matrixArray[i].dist.frequencies;
+                    for(let k = 0; k < distArray.length; k++) {
+                        let pair = await distribution.createDistributionPair(
+                            {
+                                character: distArray[k].char,
+                                count: distArray[k].count
+                            },
+                            {
+                                transaction: t
+                            }
+                        );
+                    }
                 }
-            }
-        });
+            });
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     async update(blogSerialization) {
-        if(!this.synced) {
-            throw new Error(`Cannot save blog ${blogSerialization.url}. Data store is not properly synced!`);
-        }
-        await this.database.transaction(async (t) => {
-            let blog = await this.Blog.findOne(
-                {
-                    where: {
-                        url: blogSerialization.url
-                    }
-                }
-            );
-            blog.latest_updated_date = blogSerialization.dateString;
-            await blog.save(
-                {
-                    transaction: t
-                }
-            );
-
-            let matrix = await blog.getMatrix();
-
-            let matrixArray = blogSerialization.matrix.matrix;
-            for(let i = 0; i < matrixArray.length; i++) {
-                let matchingDistributions = await matrix.getDistributions(
+        try {
+            await this.database.transaction(async (t) => {
+                let blog = await this.Blog.findOne(
                     {
                         where: {
-                            prefix: matrixArray[i].prefix
+                            url: blogSerialization.url
                         }
                     }
                 );
-                let distribution = matchingDistributions[0] ?? await matrix.createDistribution({ prefix: matrixArray[i].prefix }, { transaction: t });
-                let distributionArray = matrixArray[i].dist.frequencies;
-                for(let k = 0; k < distributionArray.length; k++) {
-                    let matchingPairs = await distribution.getDistributionPairs(
+                blog.latest_updated_date = blogSerialization.dateString;
+                await blog.save(
+                    {
+                        transaction: t
+                    }
+                );
+
+                let matrix = await blog.getMatrix();
+
+                let matrixArray = blogSerialization.matrix.matrix;
+                for(let i = 0; i < matrixArray.length; i++) {
+                    let matchingDistributions = await matrix.getDistributions(
                         {
                             where: {
-                                character: distributionArray[k].char
+                                prefix: matrixArray[i].prefix
                             }
                         }
                     );
-                    let pair = matchingPairs[0] ?? await distribution.createDistributionPair({ character: distributionArray[k].char, count: distributionArray[k].count});
-                    pair.count = distributionArray[k].count;
-                    await pair.save(
-                        {
-                            transaction: t
-                        }
-                    );
+                    let distribution = matchingDistributions[0] ?? await matrix.createDistribution({ prefix: matrixArray[i].prefix }, { transaction: t });
+                    let distributionArray = matrixArray[i].dist.frequencies;
+                    for(let k = 0; k < distributionArray.length; k++) {
+                        let matchingPairs = await distribution.getDistributionPairs(
+                            {
+                                where: {
+                                    character: distributionArray[k].char
+                                }
+                            }
+                        );
+                        let pair = matchingPairs[0] ?? await distribution.createDistributionPair({ character: distributionArray[k].char, count: distributionArray[k].count}, { transaction: t });
+                        pair.count = distributionArray[k].count;
+                        await pair.save(
+                            {
+                                transaction: t
+                            }
+                        );
+                    }
                 }
-            }
-        });
+            });
+        } catch (error) {
+            console.error(error);
+        }
     }
 }

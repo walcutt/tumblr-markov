@@ -2,11 +2,14 @@ import { DataStore } from "../../data-store/datastore";
 import { BlogSerialization } from "../../domain/blog";
 import { DistributionSerialization } from "../../domain/distribution";
 import { MarkovMatrixSerialization } from "../../domain/matrix";
+import { jest } from '@jest/globals';
 
 let dataStore;
 let bs1, bs1prime, bs2;
 let nullBlog;
 let defaultURL;
+
+jest.setTimeout(20000);
 
 beforeEach(async () => {
     defaultURL = 'defaulttestblog';
@@ -108,6 +111,7 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
+    await dataStore.database.drop();
     await dataStore.database.close();
 });
 

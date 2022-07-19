@@ -1,4 +1,4 @@
-import { MarkovMatrix, MarkovMatrixSerialization } from "./matrix";
+import { MarkovMatrix, MarkovMatrixSerialization } from './matrix.js';
 
 export const DEFAULT_POST_DATE = new Date(0);
 
