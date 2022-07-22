@@ -1,6 +1,5 @@
 import { MarkovMatrix, MarkovMatrixSerialization } from './matrix.js';
-
-export const DEFAULT_POST_DATE = new Date(0);
+import { DEFAULT_POST_DATE } from './constants.js';
 
 export class Blog {
     //string

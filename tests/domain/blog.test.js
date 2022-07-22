@@ -1,6 +1,7 @@
-import { Blog, DEFAULT_POST_DATE } from "../../domain/blog";
-import { Distribution, DistributionSerialization } from "../../domain/distribution";
-import { MarkovMatrix, MarkovMatrixSerialization } from "../../domain/matrix";
+import { Blog } from '../../domain/blog.js';
+import { DEFAULT_POST_DATE } from '../../domain/constants.js';
+import { Distribution, DistributionSerialization } from '../../domain/distribution.js';
+import { MarkovMatrix, MarkovMatrixSerialization } from '../../domain/matrix.js';
 
 test('Null Parameters', () => {
     let blog = new Blog();

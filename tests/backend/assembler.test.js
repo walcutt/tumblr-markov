@@ -1,5 +1,6 @@
 import { Assembler } from '../../backend/assembler.js';
-import { DEFAULT_CHARACTER, Distribution, DistributionSerialization } from '../../domain/distribution.js';
+import { Distribution, DistributionSerialization } from '../../domain/distribution.js';
+import { DEFAULT_CHARACTER } from '../../domain/constants.js';
 import { MarkovMatrix, MarkovMatrixSerialization } from '../../domain/matrix.js';
 
 test('Null matrix generation', () => {

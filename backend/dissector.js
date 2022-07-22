@@ -1,4 +1,4 @@
-import { DEFAULT_CHARACTER } from '../domain/distribution.js';
+import { DEFAULT_CHARACTER } from '../domain/constants.js';
 import { MarkovMatrix, MarkovMatrixSerialization } from '../domain/matrix.js';
 
 export class Dissector {

@@ -1,5 +1,6 @@
 import { Dissector } from '../../backend/dissector.js';
-import { DEFAULT_CHARACTER, Distribution, DistributionSerialization } from '../../domain/distribution';
+import { Distribution, DistributionSerialization } from '../../domain/distribution';
+import { DEFAULT_CHARACTER } from '../../domain/constants.js';
 import { MarkovMatrix, MarkovMatrixSerialization } from '../../domain/matrix.js';
 
 test('Test default parameters', () => {

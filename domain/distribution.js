@@ -1,4 +1,4 @@
-export const DEFAULT_CHARACTER = '';
+import { DEFAULT_CHARACTER } from './constants.js';
 
 export class Distribution {
     //Array<Pair<string, int>>
