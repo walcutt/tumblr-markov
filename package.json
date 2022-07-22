@@ -5,7 +5,9 @@
   "main": "backend/index.js",
   "type": "module",
   "scripts": {
-    "backend": "node backend/index.js",
+    "dissect": "node console/dissect.js",
+    "assemble": "node console/assemble.js",
+    "reset": "node console/reset.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "jest": {
