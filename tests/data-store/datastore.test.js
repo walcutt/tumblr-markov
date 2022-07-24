@@ -115,22 +115,6 @@ afterEach(async () => {
     await dataStore.database.close();
 });
 
-test('Constructor and syncing work', () => {
-    expect(dataStore.synced).toEqual(true);
-});
-
-test('Models exist and can find items', async () => {
-    let blogs = await dataStore.Blog.findAll();
-    let matrices = await dataStore.Matrix.findAll();
-    let distributions = await dataStore.Distribution.findAll();
-    let distributionPairs = await dataStore.DistributionPair.findAll();
-
-    expect(blogs).toEqual([]);
-    expect(matrices).toEqual([]);
-    expect(distributions).toEqual([]);
-    expect(distributionPairs).toEqual([]);
-});
-
 test('Retrieving a blog when none exists creates a new object', async () => {
     let blog = await dataStore.retrieveOrCreate(defaultURL);
 
