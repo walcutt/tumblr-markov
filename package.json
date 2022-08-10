@@ -8,7 +8,8 @@
     "dissect": "node console/dissect.js",
     "assemble": "node console/assemble.js",
     "reset": "node console/reset.js",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "mongo": "node console/mongo.js"
   },
   "jest": {
     "transform": {}
@@ -29,6 +30,7 @@
   },
   "dependencies": {
     "dotenv": "^16.0.1",
+    "mongodb": "^4.8.1",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.21.2"
