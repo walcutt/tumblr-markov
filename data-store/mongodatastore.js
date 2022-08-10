@@ -43,7 +43,9 @@ export class MongoDataStore {
             url: url
         });
 
-        return blog ?? new BlogSerialization(url);
+        return blog ?
+            new BlogSerialization(blog.url, blog.dateString, blog.matrix) :
+            new BlogSerialization(url);
     }
 
     async saveBlog(blogSerialization) {
