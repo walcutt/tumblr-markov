@@ -12,7 +12,8 @@
     "mongo": "node console/mongo.js"
   },
   "jest": {
-    "transform": {}
+    "transform": {},
+    "preset": "@shelf/jest-mongodb"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
   },
   "homepage": "https://github.com/walcutt/tumblr-markov#readme",
   "devDependencies": {
+    "@shelf/jest-mongodb": "^4.0.0",
     "jest": "^28.1.2",
     "sqlite3": "^5.0.8"
   },
