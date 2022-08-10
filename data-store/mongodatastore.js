@@ -31,9 +31,14 @@ export class MongoDataStore {
         await this.client.connect();
         this.database = this.client.db(this.dbName);
         this.blogs = this.database.collection('Blogs');
+        this.synced = true;
     }
 
     async getBlog(url) {
+        if(!this.synced) {
+            throw new Error(`Cannot retrieve blog ${url}: datastore has not been initialized yet.`);
+        }
+
         let blog = await this.blogs.findOne({
             url: url
         });
@@ -42,6 +47,10 @@ export class MongoDataStore {
     }
 
     async saveBlog(blogSerialization) {
+        if(!this.synced) {
+            throw new Error(`Cannot save blog ${blogSerialization.url}: datastore has not been initialized yet.`);
+        }
+
         await this.blogs.replaceOne(
             {
                 url: blogSerialization.url
@@ -54,10 +63,16 @@ export class MongoDataStore {
     }
 
     async drop() {
+        if(!this.synced) {
+            throw new Error(`Cannot drop data: datastore has not been initialized yet.`);
+        }
         await this.blogs.deleteMany({});
     }
 
     async close() {
+        if(!this.synced) {
+            return;
+        }
         await this.client.close();
     }
 }
